@@ -1,0 +1,67 @@
+﻿@model Financeiro.Util.Model.ViewModel.LancamentoFinanceiroFiltroViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <h3>Lançamentos</h3>
+    <div>
+        <a asp-action="Cadastrar" asp-controller="Lancamento" class="btn btn-default">Novo</a>
+    </div>
+</div>
+<div class="row">
+    @if (Model.ListaLancamentoFinanceiro.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th scope="col">Data do lançamento</th>
+                    <th scope="col">Valor R$</th>
+                    <th scope="col">Tipo de lançamento</th>
+                    <th scope="col">Conciliado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var lancamento in Model.ListaLancamentoFinanceiro)
+                {
+                    <tr>
+                        <td scope="row">@Html.ActionLink("Editar", "Editar", "Lancamento", new { id = lancamento.Id })</td>
+                        <td scope="row"><a href="#" onclick="ExcluirLancamento('@lancamento.Id')">Excluir</a></td>
+                        <td scope="row">@lancamento.DataHoraLancamento</td>
+                        <td scope="row">@lancamento.Valor</td>
+                        <td scope="row">@lancamento.TipoLancamento</td>
+                        <td scope="row">@lancamento.Conciliado</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+@section Scripts {
+
+    <script type="text/javascript">
+
+        function ExcluirLancamento(idLancamento) {
+
+            $.ajax({
+                url: "Lancamento/Excluir",
+                data: { id: idLancamento },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    alert(data.mensagem);
+
+                    window.location.href = "Lancamento";
+
+                }, error: function (error) {
+
+                }
+            });
+        }
+
+    </script>
+}

@@ -1,0 +1,45 @@
+﻿@model List<Financeiro.Util.Model.BalancoMensalModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Index", "Balanco", FormMethod.Post))
+{
+    <div class="row">
+        <h3>Balanço Diário</h3>
+        <div>
+            <input type="submit" name="Gerar" class="btn btn-default" value="Gerar" />
+        </div>
+    </div>
+    <div class="row">
+        <h3>Balanço Mensal</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Mês</th>
+                    <th scope="col">Ano</th>
+                    <th scope="col">Crédito R$</th>
+                    <th scope="col">Débito R$</th>
+                    <th scope="col">Saldo R$</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var balanco in Model)
+                {
+
+                <tr>
+                    <td scope="row">@balanco.Mes</td>
+                    <td scope="row">@balanco.Ano</td>
+                    <td scope="row">@balanco.ValorCredito.ToString("N2")</td>
+                    <td scope="row">@balanco.ValorDebito.ToString("N2")</td>
+                    <td scope="row">@balanco.ValorSaldo.ToString("N2")</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+}
